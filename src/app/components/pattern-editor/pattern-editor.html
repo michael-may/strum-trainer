@@ -1,0 +1,27 @@
+<div class="header">
+  <h2 id="pattern-heading">Strum pattern</h2>
+  <div class="actions">
+    <button type="button" class="btn" (click)="settings.resetPattern()">Default</button>
+    <button type="button" class="btn" (click)="settings.clearPattern()">Clear</button>
+  </div>
+</div>
+
+<div class="steps" role="group" aria-labelledby="pattern-heading" [style.--steps]="steps().length">
+  @for (s of steps(); track $index) {
+    <button
+      type="button"
+      class="step"
+      [class.up]="s.direction === 'up'"
+      [attr.aria-pressed]="s.on"
+      [attr.aria-label]="
+        (s.direction === 'down' ? 'Beat ' + s.label + ' down' : 'And up') + ' strum'
+      "
+      (click)="settings.toggleStep($index)"
+    >
+      <span class="label">{{ s.label }}</span>
+      <span class="dir" aria-hidden="true">{{
+        s.on ? (s.direction === 'down' ? '↓' : '↑') : '·'
+      }}</span>
+    </button>
+  }
+</div>

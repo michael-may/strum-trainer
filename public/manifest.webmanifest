@@ -1,0 +1,37 @@
+{
+  "id": "./",
+  "name": "Strum Trainer",
+  "short_name": "Strum Trainer",
+  "description": "Guitar strumming trainer with a metronome, custom strum patterns and a synced visualizer.",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "background_color": "#15171b",
+  "theme_color": "#23262c",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

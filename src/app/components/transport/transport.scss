@@ -1,0 +1,146 @@
+/* Wide: one row. Narrow (phones, landscape sidebar): a compact grid; see the end of the file. */
+:host {
+  display: grid;
+  grid-template-areas:
+    'play bpm ts toggles'
+    'play slider ts toggles';
+  grid-template-columns: auto auto auto 1fr;
+  align-items: center;
+  gap: 6px 24px;
+}
+
+.play {
+  grid-area: play;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
+  transition:
+    transform 0.1s,
+    background 0.2s;
+
+  &:active {
+    transform: scale(0.95);
+  }
+  &.playing {
+    background: var(--danger);
+  }
+  svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+  }
+}
+
+.bpm {
+  grid-area: bpm;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.bpm-number {
+  width: 3.4em;
+  min-width: 0;
+  font-size: 1.25rem !important;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tap {
+  white-space: nowrap;
+  transition: background 0.1s;
+
+  &.flash {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+}
+
+.slider {
+  grid-area: slider;
+  width: 100%;
+  min-width: 160px;
+  margin: 0;
+}
+
+.time-sig {
+  grid-area: ts;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toggles {
+  grid-area: toggles;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &[aria-pressed='true'] {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--text);
+  }
+  &.down span {
+    color: var(--down);
+  }
+  &.up span {
+    color: var(--up);
+  }
+}
+
+@container topbar (max-width: 700px) {
+  :host {
+    grid-template-areas:
+      'play bpm ts'
+      'play slider slider'
+      'toggles toggles toggles';
+    grid-template-columns: auto 1fr auto;
+    gap: 8px 10px;
+  }
+  .wide-only {
+    display: none;
+  }
+  .toggles .pill {
+    flex: 1;
+  }
+}
+
+@container topbar (max-width: 400px) {
+  :host {
+    grid-template-areas:
+      'play bpm bpm'
+      'play slider ts'
+      'toggles toggles toggles';
+    column-gap: 8px;
+  }
+  .slider {
+    min-width: 0;
+  }
+  .toggles {
+    flex-wrap: nowrap;
+  }
+  .toggles .pill {
+    padding-inline: 6px;
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+h2 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(var(--steps), minmax(32px, 1fr));
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--muted);
+    }
+  }
+  &[aria-pressed='true'] {
+    border-color: var(--down);
+    background: color-mix(in srgb, var(--down) 22%, transparent);
+    color: var(--text);
+  }
+  &.up[aria-pressed='true'] {
+    border-color: var(--up);
+    background: color-mix(in srgb, var(--up) 22%, transparent);
+  }
+}
+
+.label {
+  font-size: 0.8rem;
+}
+
+.dir {
+  font-size: 1.2rem;
+  line-height: 1;
+}

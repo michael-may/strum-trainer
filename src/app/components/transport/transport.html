@@ -1,0 +1,96 @@
+<button
+  type="button"
+  class="play"
+  [class.playing]="engine.playing()"
+  (click)="engine.toggle()"
+  [attr.aria-label]="engine.playing() ? 'Stop' : 'Start'"
+  title="Start / stop (Space)"
+>
+  @if (engine.playing()) {
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="6" y="6" width="12" height="12" rx="1.5" />
+    </svg>
+  } @else {
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+  }
+</button>
+
+<div class="bpm" role="group" aria-label="Tempo">
+  <button type="button" class="btn icon" (click)="nudgeBpm(-1)" aria-label="Decrease BPM">−</button>
+  <input
+    #bpmNumber
+    class="bpm-number"
+    type="number"
+    inputmode="numeric"
+    aria-label="BPM"
+    [min]="minBpm"
+    [max]="maxBpm"
+    [value]="settings.bpm()"
+    (change)="setBpm(bpmNumber.valueAsNumber); bpmNumber.value = '' + settings.bpm()"
+  />
+  <button type="button" class="btn icon" (click)="nudgeBpm(1)" aria-label="Increase BPM">+</button>
+  <button
+    type="button"
+    class="btn tap"
+    [class.flash]="tapFlash()"
+    (click)="tap()"
+    aria-label="Tap tempo"
+    title="Tap in time with the music to set the BPM"
+  >
+    Tap<span class="wide-only"> tempo</span>
+  </button>
+</div>
+
+<input
+  #bpmRange
+  class="slider"
+  type="range"
+  aria-label="BPM"
+  [min]="minBpm"
+  [max]="maxBpm"
+  [value]="settings.bpm()"
+  (input)="setBpm(bpmRange.valueAsNumber)"
+/>
+
+<div class="time-sig" role="group" aria-label="Time signature" title="Time signature">
+  <select aria-label="Beats per bar" (change)="setBeats(beats.value)" #beats>
+    @for (n of beatOptions; track n) {
+      <option [value]="n" [selected]="n === settings.timeSignature().beats">{{ n }}</option>
+    }
+  </select>
+  <span aria-hidden="true">/</span>
+  <select aria-label="Beat note value" (change)="setNoteValue(note.value)" #note>
+    @for (n of noteValues; track n) {
+      <option [value]="n" [selected]="n === settings.timeSignature().noteValue">{{ n }}</option>
+    }
+  </select>
+</div>
+
+<div class="toggles" role="group" aria-label="Sounds">
+  <button
+    type="button"
+    class="pill"
+    [attr.aria-pressed]="settings.metronome()"
+    (click)="settings.setMetronome(!settings.metronome())"
+  >
+    Metronome
+  </button>
+  <button
+    type="button"
+    class="pill down"
+    [attr.aria-pressed]="settings.downSound()"
+    (click)="settings.setDownSound(!settings.downSound())"
+    title="Play a “tock” on enabled down strums"
+  >
+    <span aria-hidden="true">↓</span> Down sound
+  </button>
+  <button
+    type="button"
+    class="pill up"
+    [attr.aria-pressed]="settings.upSound()"
+    (click)="settings.setUpSound(!settings.upSound())"
+    title="Play a “tick” on enabled up strums"
+  >
+    <span aria-hidden="true">↑</span> Up sound
+  </button>
+</div>

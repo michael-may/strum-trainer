@@ -1,0 +1,35 @@
+<div class="info" aria-hidden="true">
+  {{ settings.bpm() }} BPM · {{ settings.timeSignature().beats }}/{{
+    settings.timeSignature().noteValue
+  }}
+</div>
+
+<div class="track" [style.--steps]="steps().length">
+  @for (s of steps(); track $index) {
+    <div
+      class="step"
+      [class.down]="s.direction === 'down'"
+      [class.up]="s.direction === 'up'"
+      [class.on]="s.on"
+      [class.active]="activeStep() === $index"
+    >
+      <span class="label">{{ s.label }}</span>
+      <div class="marker">
+        @if (s.on) {
+          <app-strum-arrow class="arrow" [direction]="s.direction" />
+        } @else {
+          <span class="rest"></span>
+        }
+      </div>
+    </div>
+  }
+  <div class="playhead-rail" aria-hidden="true">
+    <div class="playhead" [class.idle]="!playing()" #playhead></div>
+  </div>
+</div>
+
+@if (playing() && !screenLocked()) {
+  <p class="hint" role="status">
+    Screen may sleep — turn off Low Power Mode or lengthen Auto-Lock.
+  </p>
+}

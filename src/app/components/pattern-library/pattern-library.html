@@ -1,0 +1,40 @@
+<h2>Pattern library</h2>
+
+<div class="row">
+  <select aria-label="Saved patterns" #pick (change)="selectedId.set(pick.value)">
+    <optgroup label="Presets">
+      @for (p of library.presets; track p.id) {
+        <option [value]="p.id" [selected]="p.id === selectedId()">{{ describe(p) }}</option>
+      }
+    </optgroup>
+    @if (library.userPatterns().length) {
+      <optgroup label="My patterns">
+        @for (p of library.userPatterns(); track p.id) {
+          <option [value]="p.id" [selected]="p.id === selectedId()">{{ describe(p) }}</option>
+        }
+      </optgroup>
+    }
+  </select>
+  <button type="button" class="btn primary" (click)="load()" [disabled]="!selected()">Load</button>
+  <button
+    type="button"
+    class="btn"
+    (click)="remove()"
+    [disabled]="!selected() || selected()?.builtIn"
+  >
+    Delete
+  </button>
+</div>
+
+<form class="row" (submit)="save($event)">
+  <input
+    type="text"
+    #nameInput
+    aria-label="Pattern name"
+    placeholder="Name current pattern…"
+    maxlength="40"
+    [value]="name()"
+    (input)="name.set(nameInput.value)"
+  />
+  <button type="submit" class="btn" [disabled]="!name().trim()">Save</button>
+</form>

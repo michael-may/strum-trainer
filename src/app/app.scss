@@ -1,0 +1,118 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.topbar {
+  container: topbar / inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 32px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  white-space: nowrap;
+
+  svg {
+    width: 12px;
+    height: 28px;
+    fill: none;
+    stroke: var(--down);
+    stroke-width: 9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+app-transport {
+  flex: 1;
+  min-width: 0;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 12px 16px 16px;
+}
+
+.visualizer {
+  flex: 1;
+  min-height: 240px;
+}
+
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 16px 24px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+/* Phones in portrait: drop the title and tighten spacing so everything fits one screen. */
+@media (max-width: 760px) {
+  h1 {
+    display: none;
+  }
+  .topbar {
+    padding: 10px;
+  }
+  main {
+    gap: 8px;
+    padding: 8px 10px 10px;
+  }
+  .editor {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px;
+  }
+}
+
+/* Phones in landscape: controls in a scrolling sidebar, visualizer fills the rest. */
+@media (orientation: landscape) and (max-height: 500px) {
+  :host {
+    display: grid;
+    grid-template-columns: minmax(320px, 44%) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100%;
+  }
+  h1 {
+    display: none;
+  }
+  .topbar {
+    grid-area: 1 / 1;
+    padding: 8px 10px;
+    border-right: 1px solid var(--line);
+  }
+  main {
+    display: contents;
+  }
+  .visualizer {
+    grid-area: 1 / 2 / 3 / 3;
+    min-height: 0;
+    margin: 8px;
+  }
+  .editor {
+    grid-area: 2 / 1;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+    border-right: 1px solid var(--line);
+    border-radius: 0;
+    overflow-y: auto;
+  }
+}
